@@ -8,7 +8,7 @@ class PlotConfig:
         self.color = color
 
 
-def getPlotter(title: str, xAxisLabel: str, yAxisLabel: str, config: List[PlotConfig]):
+def getPlotter(title: str, xAxisLabel: str, yAxisLabel: str, config: List[PlotConfig], yRange: (float, float)):
     fig, ax = plt.subplots()
     # Dictionaries to hold plot data and line objects
     plots = {}
@@ -16,7 +16,7 @@ def getPlotter(title: str, xAxisLabel: str, yAxisLabel: str, config: List[PlotCo
 
     # Set plot limits
     ax.set_xlim(0, 100)
-    ax.set_ylim(-500, 500)
+    ax.set_ylim(yRange[0], yRange[1])
 
     # Set labels and title
     ax.set_xlabel(xAxisLabel)
@@ -38,8 +38,9 @@ def getPlotter(title: str, xAxisLabel: str, yAxisLabel: str, config: List[PlotCo
         plots[name]['line'].set_data(plots[name]['xdata'], plots[name]['ydata'])
 
         ax.relim()
-        ax.autoscale_view()
+        plt.autoscale(enable=True, axis='x')
 
         plt.draw()
+        plt.pause(0.01)
 
     return update

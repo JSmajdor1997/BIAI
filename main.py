@@ -20,6 +20,7 @@ ShowSimulation = False
 # ModelToLoad = None
 ModelToLoad = ""
 
+
 def create_timestamped_json_file(directory):
     if not os.path.exists(directory):
         os.makedirs(directory)
@@ -45,7 +46,7 @@ CrossoverRate = 0.4
 fitnessPlotter = getPlotter("Fitness - Epochs", "epochs", "fitness score", [
     PlotConfig("Best Specimen", "r"),
     PlotConfig("Average of population", "g")
-])
+], (-500, 500))
 
 def main():
     global ShowSimulation
@@ -53,7 +54,7 @@ def main():
     np.random.seed(Seed)
     random.seed(Seed)
 
-    env = gym.make("Ant-v4", render_mode="human" if not ShowSimulation else None, healthy_z_range=(0.4, float("inf")))
+    env = gym.make("Ant-v4", render_mode="human" if ShowSimulation else None, healthy_z_range=(0.4, float("inf")))
 
     # plt.ion()
     # fig, ax = plt.subplots()

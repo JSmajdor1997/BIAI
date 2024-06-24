@@ -1,12 +1,13 @@
-import functools
-import operator
 from typing import List, Callable, Tuple,Optional, Any, Dict
-
+import multiprocessing
 from genetics.Genome import Genome
 
 class GenomeFitness:
     genome: Genome
     fitness: float
+
+    def encode(self):
+        return self.__dict__
 
     def __init__(self, genome: Genome, fitness: float):
         self.genome = genome
@@ -43,9 +44,16 @@ def genetic_algorithm(
         if onEpochStarted is not None:
             onEpochStarted(epoch)
 
-        # Simulation
+        # Simulationto o
         genome_fitness: List[GenomeFitness] = []
 
+        def printVal(value):
+            return ("hello " * (value))
+
+        pool_obj = multiprocessing.Pool()
+        ans = pool_obj.map(printVal, range(0, 4))
+        print(ans)
+        pool_obj.close()
         for index, genome in enumerate(population):
             genome_fitness.append(GenomeFitness(genome, calc_fitness(genome, index)))
 

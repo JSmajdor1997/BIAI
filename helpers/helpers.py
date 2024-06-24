@@ -43,9 +43,9 @@ def crossover(genome1: Genome, genome2: Genome, crossover_rate: float = 0.5) -> 
 
     for index in range(len(genome1)):
         if random.random() < crossover_rate:
-            result += genome1[index]
+            result.append(genome1[index])
         else:
-            result += genome2[index]
+            result.append(genome2[index])
 
     return result
 
