@@ -64,8 +64,8 @@ def main():
         pass
 
     def onEpochFinished(params: EpochFinishedParams):
-        LogsFile.write('')
-        json.dump(params.population[:max(EliteSize, 1)], LogsFile)
+        # LogsFile.write('')
+        # json.dump(params.population[:max(EliteSize, 1)], LogsFile)
 
         print(f'EPOCH {params.epoch} finished | best fitness value is: {params.population[0].fitness}')
 
@@ -75,17 +75,15 @@ def main():
         fitnessPlotter("Average of population", (params.epoch, sum(fitness) / len(fitness)))
         plt.pause(0.01)
 
-    frameCount = 0
+
     def calc_fitness(genome: Genome, specimenIndex: int) -> float:
-        s = env.reset()
+        observation, info = env.reset(seed=Seed)
         done = False
         score = 0
 
-        frameCount = 0
         while not done:
-            frameCount += 1
-            action = NNMap.getResults(genome, env.observation_space.sample(), sigmoid)
-            _, reward, done, _ = tuple(env.step(action)[:4])
+            action = NNMap.getResults(genome, observation, sigmoid)
+            observation, reward, done, *_ = env.step(action)
             score += reward
 
             # if(frameCount % 20 == 0):
